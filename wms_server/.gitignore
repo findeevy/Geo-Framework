@@ -1,0 +1,8 @@
+client
+server
+*.osm
+tmp.*
+a.out
+*.os
+*.so
+test*.geojson

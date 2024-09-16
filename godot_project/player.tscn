@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://bdupkh0grwy27"]
+
+[ext_resource type="Script" path="res://scripts/movement_controller.gd" id="1_5d3td"]
+[ext_resource type="PackedScene" uid="uid://b8drbos167vf8" path="res://scenes/head.tscn" id="2_erqpo"]
+[ext_resource type="Script" path="res://scripts/sprint.gd" id="3_ebxqw"]
+[ext_resource type="Script" path="res://scripts/mantle.gd" id="4_qfpqr"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ucbmx"]
+radius = 0.3
+height = 1.8
+
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 3
+floor_block_on_wall = false
+floor_snap_length = 0.5
+script = ExtResource("1_5d3td")
+speed = 5
+acceleration = 4
+deceleration = 5
+jump_height = 1.5
+height = 1.7
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_ucbmx")
+
+[node name="Head" parent="." instance=ExtResource("2_erqpo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.54, 0)
+
+[node name="Sprint" type="Node" parent="."]
+script = ExtResource("3_ebxqw")
+
+[node name="Mantle" type="Node" parent="."]
+script = ExtResource("4_qfpqr")
+allow_grounded_mantle = true

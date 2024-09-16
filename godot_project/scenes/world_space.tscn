@@ -1,0 +1,51 @@
+[gd_scene load_steps=9 format=3 uid="uid://c3q23qfi81quv"]
+
+[ext_resource type="Script" path="res://scripts/mesh_creation.gd" id="1_f3oog"]
+[ext_resource type="Texture2D" uid="uid://v8qgm7jomqph" path="res://textures/grass.png" id="3_3bmc7"]
+[ext_resource type="PackedScene" uid="uid://bdupkh0grwy27" path="res://player.tscn" id="4_eb42i"]
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_h27sf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i85vr"]
+albedo_texture = ExtResource("3_3bmc7")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_4f6hh"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_fb1i3"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bpp2i"]
+
+[node name="WorldSpace" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D/CollisionShape3D"]
+mesh = SubResource("ImmediateMesh_h27sf")
+skeleton = NodePath("../../..")
+script = ExtResource("1_f3oog")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.997564, 0.0238581, -0.0655496, 0, 0.939693, 0.34202, 0.0697565, -0.341187, 0.937404, 0, 0.31398, 0)
+directional_shadow_mode = 1
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1000, 0, 0, 0, 10, 0, 0, 0, 1000, 0, -0.001, 0)
+material_override = SubResource("StandardMaterial3D_i85vr")
+mesh = SubResource("PlaneMesh_4f6hh")
+skeleton = NodePath("../StaticBody3D/CollisionShape3D/MeshInstance3D")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.462838, 0)
+physics_material_override = SubResource("PhysicsMaterial_fb1i3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00250813, 0)
+shape = SubResource("BoxShape3D_bpp2i")
+
+[node name="Player" parent="." instance=ExtResource("4_eb42i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.3327, 0.275359, 0)
+speed = 50
+acceleration = 40
+deceleration = 50
